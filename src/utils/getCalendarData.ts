@@ -1,17 +1,6 @@
 import { monthNames } from "../constants/constants.dateNames";
+import type {Calendar} from '../types/calendar.types'
 
-type Day = {
-  weekDay: string;
-  number: number;
-  weekend: boolean;
-};
-
-type Month = {
-  title: string;
-  days: Day[];
-};
-
-type Calendar = Month[];
 
 const getDayName = (dateStr: string, locale: string) => {
   var date = new Date(dateStr);
@@ -28,7 +17,7 @@ const fillCalendarData = (year: number, month: number) => {
     filledArray[i] = {
       weekDay: dayName,
       number: i + 1,
-      weekend: dayName === "Saturday" || dayName === "Sunday",
+      isWeekend: dayName === "Saturday" || dayName === "Sunday",
     };
   }
 
