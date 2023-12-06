@@ -10,8 +10,8 @@ import { RouterLink } from 'vue-router'
                 <h1>Group Planner</h1>
             </div>
             <ul class="nav-routes">
-                <RouterLink to="/">Home</RouterLink>
-                <RouterLink to="/about">About</RouterLink>
+                <RouterLink to="/" class="homeRoute">Home</RouterLink>
+                <RouterLink to="/about" class="aboutRoute">About</RouterLink>
             </ul>
         </nav>
     </header>
