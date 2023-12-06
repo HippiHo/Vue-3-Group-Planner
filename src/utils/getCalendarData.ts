@@ -1,7 +1,7 @@
 import { monthNames } from "../constants/constants.dateNames";
 
 type Day = {
-  day: string;
+  weekDay: string;
   number: number;
   weekend: boolean;
 };
@@ -26,7 +26,7 @@ const fillCalendarData = (year: number, month: number) => {
   for (let i = 0; i < daysOfCurrentMonth; i++) {
     const dayName = getDayName(`${month + 1}/${i + 1}/${year}`, "en-US");
     filledArray[i] = {
-      day: dayName,
+      weekDay: dayName,
       number: i + 1,
       weekend: dayName === "Saturday" || dayName === "Sunday",
     };
@@ -35,12 +35,14 @@ const fillCalendarData = (year: number, month: number) => {
   return filledArray;
 };
 
-export const getCalendarData = (): Calendar => {
-  const today = new Date().getDate();
+export const getCalendarData = (startDate?: Date): Calendar => {
+  
+  const date = startDate ? startDate : new Date()
+  const today = date.getDate();
 
-  const currentMonth = new Date().getMonth();
+  const currentMonth = date.getMonth();
 
-  const currentYear = new Date().getFullYear();
+  const currentYear = date.getFullYear();
 
   const currentDaysArray = fillCalendarData(currentYear, currentMonth);
 
