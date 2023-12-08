@@ -21,6 +21,13 @@ defineProps<{
 <style lang="scss" scoped>
 .month {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* Medium devices such as tablets (768px and up) */
+@media only screen and (min-width: 48em) {
+    .month {
+        grid-template-columns: repeat(5, 1fr);
+    }
 }
 </style>
