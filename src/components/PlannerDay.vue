@@ -1,23 +1,22 @@
 <script setup lang="ts">
-import { inject, ref } from "vue";
+import { ref } from "vue";
 import type { Day } from "../types/calendar.types";
-import { dismissedWeekdays } from '../constants/constants.injectionKeys'
+import { useExcludeStore } from '@/stores/exclude'
+
 const props = defineProps<{
   day: Day;
+  weekdayIsExcluded: boolean
 }>();
 
-const dismissedWeekdaysValue = inject(dismissedWeekdays)
+const store = useExcludeStore()
 
 const isVisible = ref<boolean>(true);
+
 const toggleDayOpacity = () => {
-  if (!dismissedWeekdaysValue?.value?.some(item => item === props.day.weekDay)) {
+  if (!store.excludedWeekdays?.some(item => item === props.day.weekDay)) {
     isVisible.value = !isVisible.value
   }
 };
-
-if (dismissedWeekdaysValue?.value?.some(item => item === props.day.weekDay)) {
-  isVisible.value = false
-}
 
 </script>
 
@@ -25,7 +24,7 @@ if (dismissedWeekdaysValue?.value?.some(item => item === props.day.weekDay)) {
   <div class="day" :class="{
     weekend: day.isWeekend,
     workDay: !day.isWeekend,
-    hidden: !isVisible,
+    hidden: !isVisible || weekdayIsExcluded,
   }" @click="toggleDayOpacity">
     <span class="weekDay">{{ day.weekDay }}</span>
     <span class="number">{{ day.number }}</span>

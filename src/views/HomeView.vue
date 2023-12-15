@@ -2,12 +2,9 @@
 import { getCalendarData } from '../utils/getCalendarData'
 import PlannerMonth from '../components/PlannerMonth.vue'
 import PlannerDismiss from '@/components/PlannerDismiss.vue';
-import { provide, ref } from 'vue';
-import { dismissedWeekdays } from '../constants/constants.injectionKeys'
 
 const calendar = getCalendarData()
 
-provide(dismissedWeekdays, ref<string[]>([]))
 </script>
 
 <template>

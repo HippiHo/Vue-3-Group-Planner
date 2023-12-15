@@ -1,4 +1,6 @@
-export const weekDays = [
+import type {Weekday, MonthName} from '../types/calendar.types'
+
+export const weekDays: Weekday[] = [
     "Monday",
     "Tuesday",
     "Wednesday",
@@ -8,7 +10,7 @@ export const weekDays = [
     "Sunday"
   ]
 
-export const monthNames = [
+export const monthNames: MonthName[] = [
     "January",
     "February",
     "March",

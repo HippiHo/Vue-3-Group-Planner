@@ -1,5 +1,5 @@
 import { monthNames } from "../constants/constants.dateNames";
-import type {Calendar} from '../types/calendar.types'
+import type {Calendar, Weekday, MonthName} from '../types/calendar.types'
 
 
 const getDayName = (dateStr: string, locale: string) => {

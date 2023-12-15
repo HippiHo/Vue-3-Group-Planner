@@ -2,10 +2,13 @@
 import GlobalContainer from '../components/global/GlobalContainer.vue'
 import PlannerDay from './PlannerDay.vue'
 import type { Month } from '../types/calendar.types'
+import { useExcludeStore } from '@/stores/exclude'
 
 defineProps<{
     month: Month
 }>()
+
+const store = useExcludeStore()
 
 </script>
 
@@ -13,7 +16,7 @@ defineProps<{
     <GlobalContainer as="section">
         <h2 class="text-left">{{ month.title }}</h2>
         <div class="month">
-            <PlannerDay v-for="(day, index) in month.days" :key="index" :day="day" />
+            <PlannerDay v-for="(day, index) in month.days" :key="index" :day="day" :weekdayIsExcluded="store.excludedWeekdays?.some(item => item === day.weekDay)"/>
         </div>
     </GlobalContainer>
 </template>

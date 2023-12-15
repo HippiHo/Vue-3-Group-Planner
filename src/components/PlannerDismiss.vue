@@ -2,18 +2,22 @@
 import { weekDays } from '@/constants/constants.dateNames';
 import { Icon } from "@iconify/vue";
 import GlobalContainer from '../components/global/GlobalContainer.vue'
-import GlobalButton from '../components/global/GlobalButton.vue'
+import GlobalToggleButton from './global/GlobalToggleButton.vue'
 import { useBreakpoint } from 'vuestic-ui';
-import { dismissedWeekdays } from '../constants/constants.injectionKeys'
-import { inject } from 'vue';
+import { useExcludeStore } from '@/stores/exclude'
+import type { Weekday } from '../types/calendar.types'
 
 const breakpoint = useBreakpoint();
-const dismissedWeekdaysValue = inject(dismissedWeekdays)
+const store = useExcludeStore()
 
-const addDismissedWeekDay = (weekDay: string) => {
-    dismissedWeekdaysValue?.value.push(weekDay)
-    console.log(dismissedWeekdaysValue?.value)
+const toggleExcludeButton = (weekDay: Weekday) => {
+    if (store.excludedWeekdays.includes(weekDay)) {
+        store.removeExcludedDays(weekDay)
+    } else {
+        store.addExcludedDays(weekDay)
+    }
 }
+
 </script>
 
 <template>
@@ -23,8 +27,10 @@ const addDismissedWeekDay = (weekDay: string) => {
         </div>
         <span v-else class="dismissExplanation">Dismiss whole days of the week:</span>
         <div class="buttonsContainer">
-            <GlobalButton v-for="(weekDay, index) in weekDays" :key="index" type="dismissButton" @click="() => addDismissedWeekDay(weekDay)">{{ weekDay }}
-            </GlobalButton>
+            <GlobalToggleButton v-for="(weekDay, index) in weekDays" :key="index" :week-day="weekDay"
+                :is-add-button="store.excludedWeekdays.includes(weekDay)" @click="toggleExcludeButton(weekDay)">{{ weekDay
+                }}
+            </GlobalToggleButton>
         </div>
     </GlobalContainer>
 </template>
