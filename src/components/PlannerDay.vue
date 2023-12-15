@@ -1,26 +1,32 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { inject, ref } from "vue";
 import type { Day } from "../types/calendar.types";
-defineProps<{
+import { dismissedWeekdays } from '../constants/constants.injectionKeys'
+const props = defineProps<{
   day: Day;
 }>();
 
+const dismissedWeekdaysValue = inject(dismissedWeekdays)
+
 const isVisible = ref<boolean>(true);
 const toggleDayOpacity = () => {
-  isVisible.value = !isVisible.value;
+  if (!dismissedWeekdaysValue?.value?.some(item => item === props.day.weekDay)) {
+    isVisible.value = !isVisible.value
+  }
 };
+
+if (dismissedWeekdaysValue?.value?.some(item => item === props.day.weekDay)) {
+  isVisible.value = false
+}
+
 </script>
 
 <template>
-  <div
-    class="day"
-    :class="{
-      weekend: day.isWeekend,
-      workDay: !day.isWeekend,
-      hidden: !isVisible,
-    }"
-    @click="toggleDayOpacity"
-  >
+  <div class="day" :class="{
+    weekend: day.isWeekend,
+    workDay: !day.isWeekend,
+    hidden: !isVisible,
+  }" @click="toggleDayOpacity">
     <span class="weekDay">{{ day.weekDay }}</span>
     <span class="number">{{ day.number }}</span>
   </div>

@@ -1,8 +1,9 @@
 <script setup lang="ts">
-const props = defineProps({
-    as: String,
-    classes: { type: String, required: false},
-})
+
+const props = defineProps<{
+    as: string,
+    classes?: string,
+}>();
 const Component: any = props.as
 </script>
 
